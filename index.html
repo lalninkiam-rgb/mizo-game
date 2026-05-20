@@ -48,6 +48,12 @@
         <button class="btn" id="upgrade3" onclick="leiUpgrade(3)">
             ⚡ SUPER MODE - ₹ 5000
         </button>
+        
+        <!-- CHEAT BUTTON THAR -->
+        <button class="btn" id="cheatBtn" style="background:#f0a;" onclick="cheatPawisa()">
+            💎 CHEAT: ₹ 1 CRORE PE RAWH
+        </button>
+        
         <button class="btn" style="background:#a50;" onclick="resetGame()">
             🔄 RESET GAME
         </button>
@@ -114,6 +120,12 @@
             updateUI();
         }
 
+        function cheatPawisa() {
+            pawisa += 10000000; // 1 Crore belh
+            alert('Cheat Success! ₹1,00,00,000 i dawng e boss 💰');
+            updateUI();
+        }
+
         function resetGame() {
             if (confirm('I game reset i duh tak tak em?')) {
                 localStorage.clear();
@@ -130,4 +142,4 @@
         updateUI();
     </script>
 </body>
-  </html>
+</html>
