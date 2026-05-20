@@ -114,14 +114,14 @@
             if (type === 3 && pawisa >= cost3) {
                 pawisa -= cost3;
                 perClick += 10;
-                perSec += 5;
+                perSec += 100;
                 cost3 = Math.floor(cost3 * 2);
             }
             updateUI();
         }
 
         function cheatPawisa() {
-            pawisa += 10000000000000000000000000000000; // 1 Crore belh
+            pawisa += 1000000000000000000000; // 1 Crore belh
             alert('Cheat Success! ₹1,00,00,000 i dawng e boss 💰');
             updateUI();
         }
