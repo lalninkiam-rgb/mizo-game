@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mizo Coin Clicker</title>
+    <style>
+        body { 
+            font-family: Arial; background: #1a1a2e; color: #fff; text-align: center; 
+            margin: 0; padding: 20px; user-select: none;
+        }
+        .box { max-width: 400px; margin: auto; }
+        h1 { color: #0f8; margin: 10px 0; }
+        #coin { 
+            font-size: 80px; cursor: pointer; transition: 0.1s;
+            filter: drop-shadow(0 0 10px #ff0);
+        }
+        #coin:active { transform: scale(0.9); }
+        #pawisa { font-size: 28px; color: #ff0; margin: 15px 0; font-weight: bold; }
+        .btn { 
+            width: 100%; padding: 15px; margin: 8px 0; border: none; 
+            border-radius: 10px; font-size: 16px; font-weight: bold;
+            background: #0a5; color: white; cursor: pointer;
+        }
+        .btn:disabled { background: #444; color: #888; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .stat { background: #16213e; padding: 10px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>💰 MIZO COIN CLICKER</h1>
+        <div id="pawisa">₹ 0</div>
+        <div id="coin">🪙</div>
+        <div style="color:#aaa; font-size:14px;">Coin kha hmet rawh</div>
+
+        <div class="stats">
+            <div class="stat">Click 1 ah: <br><b id="perClick">₹ 1</b></div>
+            <div class="stat">Auto/sec: <br><b id="perSec">₹ 0</b></div>
+        </div>
+
+        <button class="btn" id="upgrade1" onclick="leiUpgrade(1)">
+            🔥 Click Upgrade - ₹ 50
+        </button>
+        <button class="btn" id="upgrade2" onclick="leiUpgrade(2)">
+            🤖 Auto Clicker - ₹ 200
+        </button>
+        <button class="btn" id="upgrade3" onclick="leiUpgrade(3)">
+            ⚡ SUPER MODE - ₹ 5000
+        </button>
+        <button class="btn" style="background:#a50;" onclick="resetGame()">
+            🔄 RESET GAME
+        </button>
+    </div>
+
+    <script>
+        let pawisa = parseInt(localStorage.getItem('pawisa')) || 0;
+        let perClick = parseInt(localStorage.getItem('perClick')) || 1;
+        let perSec = parseInt(localStorage.getItem('perSec')) || 0;
+        let cost1 = parseInt(localStorage.getItem('cost1')) || 50;
+        let cost2 = parseInt(localStorage.getItem('cost2')) || 200;
+        let cost3 = parseInt(localStorage.getItem('cost3')) || 5000;
+
+        const pawisaEl = document.getElementById('pawisa');
+        const perClickEl = document.getElementById('perClick');
+        const perSecEl = document.getElementById('perSec');
+
+        function updateUI() {
+            pawisaEl.textContent = '₹ ' + pawisa.toLocaleString();
+            perClickEl.textContent = '₹ ' + perClick;
+            perSecEl.textContent = '₹ ' + perSec;
+            
+            document.getElementById('upgrade1').textContent = `🔥 Click Upgrade - ₹ ${cost1}`;
+            document.getElementById('upgrade2').textContent = `🤖 Auto Clicker - ₹ ${cost2}`;
+            document.getElementById('upgrade3').textContent = `⚡ SUPER MODE - ₹ ${cost3}`;
+            
+            document.getElementById('upgrade1').disabled = pawisa < cost1;
+            document.getElementById('upgrade2').disabled = pawisa < cost2;
+            document.getElementById('upgrade3').disabled = pawisa < cost3;
+            saveGame();
+        }
+
+        function saveGame() {
+            localStorage.setItem('pawisa', pawisa);
+            localStorage.setItem('perClick', perClick);
+            localStorage.setItem('perSec', perSec);
+            localStorage.setItem('cost1', cost1);
+            localStorage.setItem('cost2', cost2);
+            localStorage.setItem('cost3', cost3);
+        }
+
+        document.getElementById('coin').onclick = () => {
+            pawisa += perClick;
+            updateUI();
+        };
+
+        function leiUpgrade(type) {
+            if (type === 1 && pawisa >= cost1) {
+                pawisa -= cost1;
+                perClick += 1;
+                cost1 = Math.floor(cost1 * 1.5);
+            }
+            if (type === 2 && pawisa >= cost2) {
+                pawisa -= cost2;
+                perSec += 1;
+                cost2 = Math.floor(cost2 * 1.7);
+            }
+            if (type === 3 && pawisa >= cost3) {
+                pawisa -= cost3;
+                perClick += 10;
+                perSec += 5;
+                cost3 = Math.floor(cost3 * 2);
+            }
+            updateUI();
+        }
+
+        function resetGame() {
+            if (confirm('I game reset i duh tak tak em?')) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        // Auto money
+        setInterval(() => {
+            pawisa += perSec;
+            updateUI();
+        }, 1000);
+
+        updateUI();
+    </script>
+</body>
+  </html>
